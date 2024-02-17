@@ -38,7 +38,7 @@ def save_data_to_log(
         client.insert(
             log_type.get_table_name_by_date(date),
             data[(i - 1) * 1000: i * 1000],
-            column_names=log_type.fields,
+            column_names=log_type.get_fields(),
         )
         print("Successfully inserted batch", i)
 

@@ -21,10 +21,10 @@ import datetime as dt
 db = Database()
 db.connect()
 
-# FetchHitsTaskSRCDailyTask(db.get_client()).run(dt.datetime(2024, 1, 28))
-# ParseHitsODSDailyTask(db.get_client()).run(dt.datetime(2024, 1, 28))
+FetchHitsTaskSRCDailyTask(db.get_client()).run(dt.datetime(2024, 1, 30))
+# ParseHitsODSDailyTask(db.get_client()).run(dt.datetime(2024, 1, 29))
 
-# FirstVisitsODSDailyTask(db.get_client()).run(dt.datetime(2024, 1, 28))
+# FirstVisitsODSDailyTask(db.get_client()).run(dt.datetime(2024, 1, 29))
 
 # SearchEventsDDSDailyTask(db.get_client()).run(dt.datetime(2024, 1, 28))
-ProgramViewEventDDSDailyTask(db.get_client()).run(dt.datetime(2024, 1, 28))
+# ProgramViewEventDDSDailyTask(db.get_client()).run(dt.datetime(2024, 1, 28))
