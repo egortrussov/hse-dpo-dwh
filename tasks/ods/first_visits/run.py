@@ -36,16 +36,17 @@ def run(client, inputs, outputs, task_date: datetime, mode=None):
         )
 
     db.create_logtype_table(outputs["first_visits"], task_date_normalized)
+    db.create_logtype_table(outputs["first_visits_cumulative"], task_date_normalized)
 
     db.query(f"""
         INSERT INTO
-            { outputs["first_visits"].get_table_name_by_date(task_date_normalized) }
+            { outputs["first_visits_cumulative"].get_table_name_by_date(task_date_normalized) }
         SELECT
             client_id,
             MIN(msk_date) as msk_date,
             MIN(datetime) as datetime
         FROM (
-            SELECT * FROM { inputs["previous_first_visits"].get_table_name_by_date(yesterday_date_str) }
+            SELECT * FROM { inputs["first_visits_cumulative"].get_table_name_by_date(yesterday_date_str) }
             UNION ALL
             (
                 SELECT
@@ -59,8 +60,18 @@ def run(client, inputs, outputs, task_date: datetime, mode=None):
             client_id
     """)
 
-    if mode == "recalc":
-        drop_yesterday_table(task_date, inputs["previous_first_visits"])
+    db.query(f"""
+        INSERT INTO
+            { outputs["first_visits"].get_table_name_by_date(task_date_normalized) }
+        SELECT
+            client_id,
+            msk_date,
+            datetime
+        FROM
+            { outputs["first_visits_cumulative"].get_table_name_by_date(task_date_normalized) }
+        WHERE
+            msk_date = '{ task_date_normalized }'
+    """)
 
 
 
@@ -103,9 +114,11 @@ def recalc_previous_first_visits(
 
     table.save_data_to_log(
         client,
-        log_type=inputs["previous_first_visits"],
+        log_type=inputs["first_visits_cumulative"],
         date=yesterday_date_str,
     )
+
+
 
 
 def drop_yesterday_table(

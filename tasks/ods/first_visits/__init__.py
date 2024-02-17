@@ -16,8 +16,10 @@ class FirstVisitsODSDailyTask(Task):
             inputs={
                 "previous_first_visits": logs.FirstVisitsODS1d,
                 "new_visits": logs.HitsLogParsedODS1d,
+                "first_visits_cumulative": logs.FirstVisitsCumulative,
             },
             outputs={
                 "first_visits": logs.FirstVisitsODS1d,
+                "first_visits_cumulative": logs.FirstVisitsCumulative,
             },
         )
