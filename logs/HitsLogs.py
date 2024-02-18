@@ -54,7 +54,7 @@ HitsLogParsedODS1d = PermanentLogType(
         Field('page_type', "Nullable(String)", str),
         Field('page_subtype', "Nullable(String)", str),
         Field('program_id', "Nullable(String)", str),
-        Field('search_query', "Array(Nullable(String))", list),
+        Field('search_query', "Nullable(String)", list),
         Field('search_tags', "Array(Nullable(String))", list),
         Field('search_types', "Array(Nullable(String))", list),
     ],

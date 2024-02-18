@@ -27,9 +27,9 @@ db.connect()
 # FetchHitsTaskSRCDailyTask(db.get_client()).run(dt.datetime(2024, 1, 30))
 # ParseHitsODSDailyTask(db.get_client()).run(dt.datetime(2024, 1, 30))
 
-# FirstVisitsODSDailyTask(db.get_client()).run(dt.datetime(2024, 1, 30))
+FirstVisitsODSDailyTask(db.get_client()).run(dt.datetime(2024, 1, 30), mode="recalc")
 
-# SearchEventsDDSDailyTask(db.get_client()).run(dt.datetime(2024, 1, 28))
-# ProgramViewEventDDSDailyTask(db.get_client()).run(dt.datetime(2024, 1, 28))
+# SearchEventsDDSDailyTask(db.get_client()).run(dt.datetime(2024, 1, 30))
+ProgramViewEventDDSDailyTask(db.get_client()).run(dt.datetime(2024, 1, 30))
 
 ConversionCubeCDMDailyTask(db.get_client()).run(dt.datetime(2024, 1, 30))

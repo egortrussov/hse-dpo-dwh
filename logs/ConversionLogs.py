@@ -70,7 +70,7 @@ ConversionCubeCDM1d = PermanentLogType(
         # Field("program_ids", "Array(String)", list),
         # Field("programs_count", "UInt32", list),
 
-        # Field("tags", "Array(String)", list),
+        Field("tags", "Array(Nullable(String))", list),
         # Field("types", "Array(String)", list),
         # Field("queries", "Array(String)", list),
 

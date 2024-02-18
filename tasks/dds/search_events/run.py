@@ -15,8 +15,8 @@ def run(client, inputs, outputs, task_date: datetime):
         INSERT INTO
             { outputs["search_events"].get_table_name_by_date(task_date_normalized) }
         SELECT
-            msk_date,
             client_id,
+            msk_date,
             arrayDistinct(groupArrayArray(search_tags)) as tags,
             arrayDistinct(groupArrayArray(search_types)) as types,
             arrayFilter(

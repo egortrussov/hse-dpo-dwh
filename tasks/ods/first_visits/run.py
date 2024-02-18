@@ -84,7 +84,7 @@ def recalc_previous_first_visits(
     yesterday_date = current_date - timedelta(days=1)
     yesterday_date_str = yesterday_date.isoformat()[:10]
 
-    limit_date = current_date - timedelta(days=1)
+    limit_date = current_date - timedelta(days=28)
     limit_date_str = limit_date.isoformat()[:10]
 
     print(yesterday_date_str, limit_date_str)
