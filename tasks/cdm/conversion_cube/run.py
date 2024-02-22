@@ -29,8 +29,22 @@ def run(client, inputs, outputs, task_date: datetime, mode=None):
                 s.action AS action,
                 s.msk_date AS msk_date,
                 s.client_id AS client_id,
-                [''] as tags,
-                t.utm_source AS utm_source
+                [] as tags,
+                [] as types,
+                [] as queries,
+                [] as program_ids,
+                0 as programs_count,
+
+                t.utm_source AS utm_source,
+                t.utm_campaign as utm_campaign,
+                t.utm_content as utm_content,
+                t.utm_medium as utm_medium,
+                t.utm_source as utm_source,
+
+                t.country as country,
+                t.city as city,
+                t.os_family as os_family,
+                t.device_type as device_type
             FROM (
                 -- raw visits
                 SELECT
@@ -56,7 +70,15 @@ def run(client, inputs, outputs, task_date: datetime, mode=None):
                     msk_date,
                     client_id,
                     datetime,
-                    first_value(utm_source) as utm_source
+                    first_value(utm_campaign) as utm_campaign,
+                    first_value(utm_content) as utm_content,
+                    first_value(utm_medium) as utm_medium,
+                    first_value(utm_source) as utm_source,
+
+                    first_value(country) as country,
+                    first_value(city) as city,
+                    first_value(os_family) as os_family,
+                    first_value(device_type) as device_type
                 FROM
                     { inputs["visits"].get_table_name_by_date(task_date_normalized) }
                 GROUP BY
@@ -72,29 +94,61 @@ def run(client, inputs, outputs, task_date: datetime, mode=None):
                 s.msk_date as msk_date,
                 s.client_id as client_id,
                 s.tags as tags,
-                t.utm_source as utm_source
+                s.types as types,
+                s.queries as queries,
+                s.program_ids as program_ids,
+                s.programs_count as programs_count,
+
+                t.utm_campaign as utm_campaign,
+                t.utm_content as utm_content,
+                t.utm_medium as utm_medium,
+                t.utm_source as utm_source,
+
+                t.country as country,
+                t.city as city,
+                t.os_family as os_family,
+                t.device_type as device_type
             from (
+                -- search events
                 SELECT
                     'search' AS action,
                     msk_date,
                     client_id,
-                    tags
+                    tags,
+                    types,
+                    queries,
+                    [] as program_ids,
+                    0 as programs_count
                 FROM
                     { inputs["search_events"].get_table_name_by_date(task_date_normalized) }
                 UNION ALL
+                -- program views
                 SELECT
                     'view_program' AS action,
                     msk_date,
                     client_id,
-                    [] as tags
+                    [] as tags,
+                    [] as types,
+                    [] as queries,
+                    program_ids,
+                    programs_count
                 FROM
                     { inputs["program_views"].get_table_name_by_date(task_date_normalized) }
             ) as s
             JOIN (
+                -- user meta
                 SELECT
                     msk_date,
                     client_id,
-                    first_value(utm_source) as utm_source
+                    first_value(utm_campaign) as utm_campaign,
+                    first_value(utm_content) as utm_content,
+                    first_value(utm_medium) as utm_medium,
+                    first_value(utm_source) as utm_source,
+
+                    first_value(country) as country,
+                    first_value(city) as city,
+                    first_value(os_family) as os_family,
+                    first_value(device_type) as device_type
                 FROM
                     { inputs["visits"].get_table_name_by_date(task_date_normalized) }
                 GROUP BY

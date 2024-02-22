@@ -66,21 +66,20 @@ ConversionCubeCDM1d = PermanentLogType(
         Field("msk_date", "String", str),
 
         # Field("main_program_id", "Nullable(String)", str),
-
-        # Field("program_ids", "Array(String)", list),
-        # Field("programs_count", "UInt32", list),
-
         Field("tags", "Array(Nullable(String))", list),
-        # Field("types", "Array(String)", list),
-        # Field("queries", "Array(String)", list),
+        Field("types", "Array(String)", list),
+        Field("queries", "Array(String)", list),
 
-        # Field('utm_campaign', "Nullable(String)", str),
-        # Field('utm_content', "Nullable(String)", str),
-        # Field('utm_medium', "Nullable(String)", str),
+        Field("program_ids", "Array(String)", list),
+        Field("programs_count", "Nullable(UInt32)", list),
+
+        Field('utm_campaign', "Nullable(String)", str),
+        Field('utm_content', "Nullable(String)", str),
+        Field('utm_medium', "Nullable(String)", str),
         Field('utm_source', "Nullable(String)", str),
-        # Field('country', "Nullable(String)", str),
-        # Field('city', "Nullable(String)", str),
-        # Field('os_family', "Nullable(String)", str),
-        # Field('device_type', "Nullable(String)", str),
+        Field('country', "Nullable(String)", str),
+        Field('city', "Nullable(String)", str),
+        Field('os_family', "Nullable(String)", str),
+        Field('device_type', "Nullable(String)", str),
     ]
 )
