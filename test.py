@@ -16,20 +16,51 @@ from tasks.dds.program_views import (
 from tasks.cdm.conversion_cube import (
     ConversionCubeCDMDailyTask,
 )
+from tasks.dds.programs_meta import (
+    ProgramsMetaDDSTask
+)
+from tasks.dds.hits_enriched import (
+    HitsEnrichedDDSDailyTask,
+)
+
+from tasks.source.fetch_visits import (
+    FetchVisitsSRCDailyTask,
+)
+from tasks.ods.parse_visits import (
+    ParseVisitsODSDailyTask,
+)
+from tasks.dds.achieved_goals import (
+    AchievedGoalsDDSDailyTask,
+)
 
 from infra.database import Database
 
 import datetime as dt
 
+import clickhouse_connect
+
+# clickhouse_connect.get_client(host='172.18.0.10')
+
 db = Database()
 db.connect()
 
-# FetchHitsTaskSRCDailyTask(db.get_client()).run(dt.datetime(2024, 1, 30))
-# ParseHitsODSDailyTask(db.get_client()).run(dt.datetime(2024, 1, 30))
+DATE = dt.datetime(2024, 2, 4)
 
-# FirstVisitsODSDailyTask(db.get_client()).run(dt.datetime(2024, 1, 30), mode="recalc")
+# FetchVisitsSRCDailyTask(db.get_client()).run(DATE)
+ParseVisitsODSDailyTask(db.get_client()).run(DATE)
 
-# SearchEventsDDSDailyTask(db.get_client()).run(dt.datetime(2024, 1, 30))
-# ProgramViewEventDDSDailyTask(db.get_client()).run(dt.datetime(2024, 1, 30))
+AchievedGoalsDDSDailyTask(db.get_client()).run(DATE)
 
-ConversionCubeCDMDailyTask(db.get_client()).run(dt.datetime(2024, 1, 30))
+# FetchHitsTaskSRCDailyTask(db.get_client()).run(DATE)
+# ParseHitsODSDailyTask(db.get_client()).run(DATE)
+
+# ProgramsMetaDDSTask(db.get_client()).run(DATE)
+
+# HitsEnrichedDDSDailyTask(db.get_client()).run(DATE)
+
+# FirstVisitsODSDailyTask(db.get_client()).run(DATE)
+
+# SearchEventsDDSDailyTask(db.get_client()).run(DATE)
+# ProgramViewEventDDSDailyTask(db.get_client()).run(DATE)
+
+ConversionCubeCDMDailyTask(db.get_client()).run(DATE)

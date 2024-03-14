@@ -57,13 +57,27 @@ ProgramPageViewsDDS1d = LogTypeWithTTL(
     engine="Log",
 )
 
+AchievedGoalsDDS1d = LogTypeWithTTL(
+    database="conversion",
+    name="goals",
+    ttl=3,
+    fields_list=[
+        Field("client_id", "String", str),
+        Field("msk_date", "String", str),
+        Field("goal", "Nullable(String)", list),
+        Field("goal_rus", "Nullable(String)", list),
+        Field("program_id", "Nullable(String)", list),
+    ],
+    engine="Log",
+)
+
 ConversionCubeCDM1d = PermanentLogType(
     database="conversion",
     name="conversion_cube",
     fields_list=[
         Field("action", "String", str),
-        Field("client_id", "String", str),
         Field("msk_date", "String", str),
+        Field("client_id", "String", str),
 
         # Field("main_program_id", "Nullable(String)", str),
         Field("tags", "Array(Nullable(String))", list),

@@ -28,5 +28,3 @@ class Task:
             task_date=task_date,
             **kwargs,
         )
-
-

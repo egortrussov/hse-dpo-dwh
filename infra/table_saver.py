@@ -1,4 +1,4 @@
-from .log_types import (
+from .logtypes.logtype_base import (
     LogTypeBase,
 )
 
@@ -33,11 +33,12 @@ def save_data_to_log(
 
     print("Created table")
 
-    for i in range(1, len(data) // 1000 + 1):
+    for i in range(1, len(data) // 500 + 1):
         print("Inserting batch", i)
+        print(len(data[(i - 1) * 500: i * 500]))
         client.insert(
             log_type.get_table_name_by_date(date),
-            data[(i - 1) * 1000: i * 1000],
+            data[(i - 1) * 500: i * 500],
             column_names=log_type.get_fields(),
         )
         print("Successfully inserted batch", i)

@@ -122,6 +122,19 @@ def run(client, inputs, outputs, task_date: datetime, mode=None):
                 FROM
                     { inputs["search_events"].get_table_name_by_date(task_date_normalized) }
                 UNION ALL
+                -- goals
+                SELECT
+                    'reach_goal' AS action,
+                    msk_date,
+                    client_id,
+                    [] as tags,
+                    [] as types,
+                    [] as queries,
+                    [] as program_ids,
+                    0 as programs_count
+                FROM
+                    { inputs["goals"].get_table_name_by_date(task_date_normalized) }
+                UNION ALL
                 -- program views
                 SELECT
                     'view_program' AS action,
@@ -156,5 +169,26 @@ def run(client, inputs, outputs, task_date: datetime, mode=None):
                     client_id
             ) AS t
             USING client_id, msk_date
+        )
+    """)
+
+    db.create_logtype_table(
+        outputs["conversion_cube_cumulative"],
+        task_date_normalized,
+        drop=False
+    )
+
+    db.query(f"""
+        INSERT INTO 
+            {outputs["conversion_cube_cumulative"].get_table_name_by_date(task_date_normalized)}
+        SELECT
+            *
+        FROM (
+            SELECT *
+            FROM {outputs["conversion_cube_cumulative"].get_table_name_by_date(task_date_normalized)}
+            WHERE msk_date != '{task_date_normalized}'
+            UNION ALL
+            SELECT *
+            FROM {outputs["conversion_cube"].get_table_name_by_date(task_date_normalized)}
         )
     """)

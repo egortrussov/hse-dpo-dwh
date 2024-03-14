@@ -36,6 +36,13 @@ class LogTypeBase:
         for field in self.fields:
             fields_list.append(field.name)
         return fields_list
+    
+
+    def get_types(self):
+        types_list = []
+        for field in self.fields:
+            types_list.append(field.py_type)
+        return types_list
 
 
     def get_engine(self):
