@@ -45,4 +45,11 @@ def parse_goal(goal_rus):
         return "trial"
 
     return "other"
-    
+
+
+def get_goal_name(goal_id):
+    if goal_id == '320858330':
+        return "send_form"
+    if goal_id == '323126383':
+        return "register_cabinet"
+    return None

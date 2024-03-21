@@ -16,6 +16,7 @@ from .utils import (
     get_goals_names,
     get_goals_program_ids,
     parse_goal,
+    get_goal_name,
 )
 from copy import deepcopy
 
@@ -50,8 +51,12 @@ def run(client, inputs, outputs, task_date: datetime):
         lastsignUTMSource="utm_source",
         lastsignUTMCampaign="utm_campaign",
     )
+    
+    
 
     table.map_rows(parse_row, is_multiple_output=True)
+    print("------")
+    table.map_rows(parse_row_goals, is_multiple_output=True)
 
     table.save_data_to_log(
         client,
@@ -62,9 +67,9 @@ def run(client, inputs, outputs, task_date: datetime):
 
 def parse_row(row):
     if row["parsed_params_key_3"] == "[]":
-        row["goal"] = None
-        row["goal_rus"] = None
-        row["program_id"] = None
+        row["visit_param_goal"] = None
+        row["visit_param_goal_rus"] = None
+        row["visit_param_goal_program_id"] = None
         return [row]
     goals_names = get_goals_names(row["parsed_params_key_3"])
     goals_program_ids = get_goals_program_ids(row["parsed_params_key_3"])
@@ -76,8 +81,24 @@ def parse_row(row):
         goal_parsed = parse_goal(goal_name)
         result_rows.append(deepcopy(row))
         
-        result_rows[-1]["goal"] = goal_parsed
-        result_rows[-1]["goal_rus"] = goal_name
-        result_rows[-1]["program_id"] = program_id
+        result_rows[-1]["visit_param_goal"] = goal_parsed
+        result_rows[-1]["visit_param_goal_rus"] = goal_name
+        result_rows[-1]["visit_param_goal_program_id"] = program_id
+
+    return result_rows
+
+
+def parse_row_goals(row):
+    if row["goals_id"] == "[]":
+        row["goal"] = None
+        row["goal_name"] = None
+        return [row]
+    goals_id_list = row["goals_id"][1:-1].split(",")
+    result_rows = []
+    
+    for goal_id in goals_id_list:
+        result_rows.append(deepcopy(row))
+        result_rows[-1]["goal"] = goal_id
+        result_rows[-1]["goal_name"] = get_goal_name(goal_id)
 
     return result_rows

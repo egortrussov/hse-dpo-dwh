@@ -11,6 +11,10 @@ def save_data_to_log(
 ):
     print(f"Saving { len(data) } rows to table " + log_type.get_table_name_by_date(date))
 
+    client.query(
+        f"CREATE DATABASE IF NOT EXISTS {log_type.get_database()}"
+    )
+    
     drop_table_query = f"""
         DROP TABLE IF EXISTS
         { log_type.get_table_name_by_date(date) }

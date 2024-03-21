@@ -61,6 +61,7 @@ class LogsFetcherBase:
             if "log_request" not in parsed.keys():
                 print("Error sending request, sleep")
                 time.sleep(5)
+                continue
 
             if (parsed["log_request"]["status"] != "processed"):
                 print(parsed)

@@ -53,9 +53,13 @@ VisitsParsedODS1d = PermanentLogType(
         Field("last_traffic_source", "Nullable(String)", str),
         Field("utm_source", "Nullable(String)", str),
         Field("utm_campaign", "Nullable(String)", str),
+
+        Field("visit_param_goal", "Nullable(String)", str),
+        Field("visit_param_goal_rus", "Nullable(String)", str),
+        Field("visit_param_goal_program_id", "Nullable(String)", str),
         
         Field("goal", "Nullable(String)", str),
-        Field("goal_rus", "Nullable(String)", str),
-        Field("program_id", "Nullable(String)", str),
+        Field("goal_name", "Nullable(String)", str),
+        
     ],
 )

@@ -26,6 +26,9 @@ class LogTypeBase:
 
     def get_engine(self):
         return self.engine
+
+    def get_database(self):
+        return self.database
     
 
     def get_ttl(self):

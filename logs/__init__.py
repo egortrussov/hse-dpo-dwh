@@ -18,6 +18,7 @@ from .ConversionLogs import (
 from .Marts import (
     SearchPopularityLog,
     ConversionCumulativeLog,
+    HitsEnrichedCumulativeLog,
 )
 from .MetaLogs import (
     ProgramsMetadataLog,

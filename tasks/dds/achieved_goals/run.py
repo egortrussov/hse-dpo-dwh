@@ -18,8 +18,10 @@ def run(client, inputs, outputs, task_date: datetime):
             client_id,
             msk_date,
             goal,
-            goal_rus,
-            program_id
+            goal_name,
+            visit_param_goal,
+            visit_param_goal_rus,
+            visit_param_goal_program_id
         FROM { inputs["visits"].get_table_name_by_date(task_date_normalized) }
         WHERE
             NOT isNull(goal)

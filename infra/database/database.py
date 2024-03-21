@@ -9,7 +9,7 @@ class Database:
 
 
     def connect(self):
-        self.client = clickhouse_connect.get_client(host='172.18.0.10')
+        self.client = clickhouse_connect.get_client(host='172.18.0.4')
         # self.client = clickhouse_connect.get_client(host='localhost')
     
     
@@ -25,6 +25,10 @@ class Database:
             drop  = True
     ):
         table_path = logtype.get_table_name_by_date(date_str)
+        
+        self.client.query(
+            f"CREATE DATABASE IF NOT EXISTS {logtype.get_database()}"
+        )
 
         if drop:
             self.drop_table(logtype, date_str)

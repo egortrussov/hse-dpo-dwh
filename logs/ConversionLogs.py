@@ -65,8 +65,10 @@ AchievedGoalsDDS1d = LogTypeWithTTL(
         Field("client_id", "String", str),
         Field("msk_date", "String", str),
         Field("goal", "Nullable(String)", list),
-        Field("goal_rus", "Nullable(String)", list),
-        Field("program_id", "Nullable(String)", list),
+        Field("goal_name", "Nullable(String)", list),
+        Field("visit_param_goal", "Nullable(String)", list),
+        Field("visit_param_goal_rus", "Nullable(String)", list),
+        Field("visit_param_goal_program_id", "Nullable(String)", list),
     ],
     engine="Log",
 )
