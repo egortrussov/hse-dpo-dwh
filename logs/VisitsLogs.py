@@ -3,14 +3,16 @@
 # )
 from infra.logtypes import (
     PermanentLogType,
+    LogTypeWithTTL,
 )
 from infra.database import (
     Field,
 )
 
-VisitsLogSource1d = PermanentLogType(
+VisitsLogSource1d = LogTypeWithTTL(
     database="source_visits",
     name="visits",
+    ttl=30,
     fields_list=[
         Field("visitID", "Nullable(String)", str),
         Field("clientID", "Nullable(String)", str),
@@ -32,9 +34,10 @@ VisitsLogSource1d = PermanentLogType(
     ],
 )
 
-VisitsParsedODS1d = PermanentLogType(
+VisitsParsedODS1d = LogTypeWithTTL(
     database="ods_visits",
     name="visits",
+    ttl=14,
     fields_list=[
         Field("visit_id", "Nullable(String)", str),
         Field("client_id", "Nullable(String)", str),

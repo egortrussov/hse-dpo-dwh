@@ -19,6 +19,11 @@ from .utils import (
     get_goal_name,
 )
 from copy import deepcopy
+from infra.database import Database
+
+
+db = Database()
+db.connect()
 
 def run(client, inputs, outputs, task_date: datetime):
     task_date_normalized = task_date.isoformat()[:10]
@@ -63,6 +68,20 @@ def run(client, inputs, outputs, task_date: datetime):
         outputs["parsed_visits"],
         task_date_normalized,
     )
+    
+    db.create_logtype_table(
+        outputs["visits_cumulative"],
+        task_date_normalized,
+        drop=False
+    )
+
+    db.query(f"""
+        INSERT INTO 
+            conversion.visits
+        SELECT
+            *
+        FROM {outputs["parsed_visits"].get_table_name_by_date(task_date_normalized)}
+    """)
 
 
 def parse_row(row):

@@ -32,6 +32,9 @@ from tasks.ods.parse_visits import (
 from tasks.dds.achieved_goals import (
     AchievedGoalsDDSDailyTask,
 )
+from tasks.cdm.hits_enriched_mart import (
+    HitsEnrichedCumulativeDailyTask,
+)
 
 from infra.database import Database
 
@@ -44,23 +47,25 @@ import clickhouse_connect
 db = Database()
 db.connect()
 
-DATE = dt.datetime(2024, 3, 19)
+DATE = dt.datetime(2024, 4, 4)
 
 # FetchVisitsSRCDailyTask(db.get_client()).run(DATE)
 # ParseVisitsODSDailyTask(db.get_client()).run(DATE)
 
+# FetchHitsTaskSRCDailyTask(db.get_client()).run(DATE)
+ParseHitsODSDailyTask(db.get_client()).run(DATE)
+
 # AchievedGoalsDDSDailyTask(db.get_client()).run(DATE)
 
-# FetchHitsTaskSRCDailyTask(db.get_client()).run(DATE)
-# ParseHitsODSDailyTask(db.get_client()).run(DATE)
 
 # ProgramsMetaDDSTask(db.get_client()).run(DATE)
 
 # HitsEnrichedDDSDailyTask(db.get_client()).run(DATE)
 
-FirstVisitsODSDailyTask(db.get_client()).run(DATE, mode="recalc")
+# FirstVisitsODSDailyTask(db.get_client()).run(DATE)
 
 # SearchEventsDDSDailyTask(db.get_client()).run(DATE)
 # ProgramViewEventDDSDailyTask(db.get_client()).run(DATE)
 
 # ConversionCubeCDMDailyTask(db.get_client()).run(DATE)
+# HitsEnrichedCumulativeDailyTask(db.get_client()).run(DATE)

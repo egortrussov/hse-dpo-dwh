@@ -3,14 +3,16 @@
 # )
 from infra.logtypes import (
     PermanentLogType,
+    LogTypeWithTTL,
 )
 from infra.database import (
     Field,
 )
 
-HitsLogSource1d = PermanentLogType(
+HitsLogSource1d = LogTypeWithTTL(
     database="source_hits",
     name="hits",
+    ttl=30,
     fields_list=[
         Field("watchID", "String", str),
         Field("clientID", "String", str),
@@ -31,9 +33,10 @@ HitsLogSource1d = PermanentLogType(
     ],
 )
 
-HitsLogParsedODS1d = PermanentLogType(
+HitsLogParsedODS1d = LogTypeWithTTL(
     database="ods_hits",
     name="hits",
+    ttl=14,
     fields_list=[
         Field('watch_id', "Nullable(String)", str),
         Field('client_id', "Nullable(String)", str),
@@ -87,10 +90,10 @@ HitsEnrichedLogDDS1d = PermanentLogType(
         Field('search_tags', "Array(Nullable(String))", list),
         Field('search_types', "Array(Nullable(String))", list),
 
-        Field('program_title', "String", str),
-        Field('program_type', "String", str),
-        Field('program_org_unit_id', "String", str),
-        Field('program_org_unit_title', "String", str),
+        Field('program_title', "Nullable(String)", str),
+        Field('program_type', "Nullable(String)", str),
+        Field('program_org_unit_id', "Nullable(String)", str),
+        Field('program_org_unit_title', "Nullable(String)", str),
     ],
 )
 

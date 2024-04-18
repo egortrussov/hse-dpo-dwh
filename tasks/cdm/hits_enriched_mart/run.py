@@ -9,7 +9,7 @@ db.connect()
 def run(client, inputs, outputs, task_date: datetime):
     task_date_normalized = task_date.isoformat()[:10]
 
-    db.create_logtype_table(outputs["hits_enriched"], task_date_normalized)
+    db.create_logtype_table(outputs["hits_enriched"], task_date_normalized, drop=False)
 
     db.query(f"""
         INSERT INTO

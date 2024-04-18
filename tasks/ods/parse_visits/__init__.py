@@ -18,6 +18,7 @@ class ParseVisitsODSDailyTask(Task):
             },
             outputs={
                 "parsed_visits": logs.VisitsParsedODS1d,
+                "visits_cumulative": logs.VisitsParsedCumulativeLog,
             },
         )
 

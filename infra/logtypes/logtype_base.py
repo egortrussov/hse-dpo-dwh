@@ -48,6 +48,11 @@ class LogTypeBase:
     def get_engine(self):
         return self.engine
 
+    
+    def get_name(self):
+        return self.name
+    
+
     def get_database(self):
         return self.database
     

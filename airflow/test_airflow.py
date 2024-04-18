@@ -61,7 +61,7 @@ import datetime as dt
 
 
 # A DAG represents a workflow, a collection of tasks
-with DAG(dag_id="main-dag", start_date=datetime(2024, 3, 20), schedule="0 0 * * *") as dag:
+with DAG(dag_id="main-dag", start_date=datetime(2024, 3, 20), schedule="0 9 * * *") as dag:
     # Tasks are represented as operators
     
     db = Database()
@@ -127,7 +127,7 @@ with DAG(dag_id="main-dag", start_date=datetime(2024, 3, 20), schedule="0 0 * * 
     hello >> \
         [FetchHits() >> ParseHits()] >> \
         hello1 >> \
-        [FetchVisits() >> ParseVisits()] >> \
+        FetchVisits() >> ParseVisits() >> \
         hello2 >> \
         [CalculateFirstVisits(), EnrichHits(), ProgramViewEvents(), SearchEvents(), AchievedGoals()] >> \
         ConversionCube() >> HitsEnrichedMart()

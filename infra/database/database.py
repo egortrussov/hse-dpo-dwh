@@ -9,7 +9,7 @@ class Database:
 
 
     def connect(self):
-        self.client = clickhouse_connect.get_client(host='172.18.0.4')
+        self.client = clickhouse_connect.get_client(host='172.18.0.9')
         # self.client = clickhouse_connect.get_client(host='localhost')
     
     
@@ -46,13 +46,21 @@ class Database:
     
 
     def query(self, query: str):
-        self.client.command(query)
+        return self.client.command(query)
 
     
     def drop_table(self, logtype: LogTypeBase, date_str: str = None):
         drop_table_query = f"""
             DROP TABLE IF EXISTS
             { logtype.get_table_name_by_date(date_str) }
+        """
+        self.client.command(drop_table_query)
+    
+    
+    def drop_table_by_name(self, database, table_name):
+        drop_table_query = f"""
+            DROP TABLE IF EXISTS
+            { database }.`{ table_name }`
         """
         self.client.command(drop_table_query)
 
