@@ -1,4 +1,4 @@
-from .log_types import (
+from .logtypes import (
     PermanentLogType,  # noqa
     LogTypeWithTTL,  # noqa
     StaticLogType,  # noqa

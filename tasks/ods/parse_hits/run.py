@@ -26,7 +26,7 @@ def run(client, inputs, outputs, task_date: datetime):
     input_table = inputs["source_hits"].get_table_name_by_date(task_date_normalized)
 
     table = send_select_query(
-        client,
+        client.get_client(),
         inputs["source_hits"],
         task_date_normalized,
         fields=None,
@@ -54,23 +54,10 @@ def run(client, inputs, outputs, task_date: datetime):
     table.map_rows(parse_row)
 
     table.save_data_to_log(
-        client,
+        client.get_client(),
         outputs["parsed_hits"],
         task_date_normalized,
     )
-
-    # rows = list(map(
-    #     lambda row : parse_row(renamed_raw_fields, row),
-    #     table_prepared,
-    # ))
-
-    # cnt = 0
-    # for i in rows:
-    #     cnt += i["page_type"] != 'other'
-
-    # print(len(table.rows))
-
-    # print(table.rows[:10])
 
 
 def parse_row(row):

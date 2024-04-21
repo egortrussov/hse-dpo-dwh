@@ -1,5 +1,5 @@
 from infra.logtypes.logtype_base import LogTypeBase
-from infra import table_saver
+from .table_saver import table_saver
 
 
 class TableContainer:

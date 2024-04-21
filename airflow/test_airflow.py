@@ -1,4 +1,3 @@
-from datetime import datetime
 import sys
 import os
 
@@ -46,18 +45,9 @@ from tasks.cdm.hits_enriched_mart import (
     HitsEnrichedCumulativeDailyTask
 )
 
-
-# from tasks.source.fetch_hits import (
-#     FetchHitsTaskSRCDailyTask,
-#     ParseHitsODSDailyTask,
-# )
+from datetime import datetime
 from infra.database import Database
 import datetime as dt
-
-
-
-# def config_airflow():
-
 
 
 # A DAG represents a workflow, a collection of tasks
@@ -70,68 +60,60 @@ with DAG(dag_id="main-dag", start_date=datetime(2024, 3, 20), schedule="0 9 * * 
     DATE = dt.datetime.now() - dt.timedelta(days=1)
 
 
-    hello = BashOperator(task_id="hello", bash_command="sleep 5")
-    hello1 = BashOperator(task_id="hello1", bash_command="sleep 5")
-    hello2 = BashOperator(task_id="hello2", bash_command="sleep 5")
+    cleanup = BashOperator(task_id="cleanup", bash_command="sleep 5")
+    cleanup1 = BashOperator(task_id="cleanup1", bash_command="sleep 5")
+    cleanup2 = BashOperator(task_id="cleanup2", bash_command="sleep 5")
 
 
     @task()
     def FetchHits():
-        # print("hjujhuh")
-        FetchHitsTaskSRCDailyTask(db.get_client()).run(DATE)
+        FetchHitsTaskSRCDailyTask(db).run(DATE)
     
     @task()
     def FetchVisits():
-        # print("hjujhuh")
-        FetchVisitsSRCDailyTask(db.get_client()).run(DATE)
+        FetchVisitsSRCDailyTask(db).run(DATE)
     
     @task()
     def ParseHits():
-        ParseHitsODSDailyTask(db.get_client()).run(DATE)
+        ParseHitsODSDailyTask(db).run(DATE)
         
     @task()
     def ParseVisits():
-        # print("hjujhuh")
-        ParseVisitsODSDailyTask(db.get_client()).run(DATE)
+        ParseVisitsODSDailyTask(db).run(DATE)
     
     @task()
     def CalculateFirstVisits():
-        FirstVisitsODSDailyTask(db.get_client()).run(DATE)
+        FirstVisitsODSDailyTask(db).run(DATE)
     
     @task()
     def EnrichHits():
-        HitsEnrichedDDSDailyTask(db.get_client()).run(DATE)
+        HitsEnrichedDDSDailyTask(db).run(DATE)
     
     @task()
     def ProgramViewEvents():
-        ProgramViewEventDDSDailyTask(db.get_client()).run(DATE)
+        ProgramViewEventDDSDailyTask(db).run(DATE)
     
     @task()
     def SearchEvents():
-        SearchEventsDDSDailyTask(db.get_client()).run(DATE)
+        SearchEventsDDSDailyTask(db).run(DATE)
     
     @task()
     def AchievedGoals():
-        AchievedGoalsDDSDailyTask(db.get_client()).run(DATE)
+        AchievedGoalsDDSDailyTask(db).run(DATE)
     
     @task()
     def ConversionCube():
-        ConversionCubeCDMDailyTask(db.get_client()).run(DATE)
+        ConversionCubeCDMDailyTask(db).run(DATE)
     
     @task()
     def HitsEnrichedMart():
-        HitsEnrichedCumulativeDailyTask(db.get_client()).run(DATE)
+        HitsEnrichedCumulativeDailyTask(db).run(DATE)
 
-    # Set dependencies between tasks]
-    # hello >> FetchHits() >> ParseHits()
-    hello >> \
+    # Set dependencies between tasks
+    cleanup >> \
         [FetchHits() >> ParseHits()] >> \
-        hello1 >> \
+        cleanup1 >> \
         FetchVisits() >> ParseVisits() >> \
-        hello2 >> \
+        cleanup2 >> \
         [CalculateFirstVisits(), EnrichHits(), ProgramViewEvents(), SearchEvents(), AchievedGoals()] >> \
         ConversionCube() >> HitsEnrichedMart()
-    # ParseHits() >> CalculateFirstVisits()
-    # ParseHits() >> EnrichHits()
-    
-    

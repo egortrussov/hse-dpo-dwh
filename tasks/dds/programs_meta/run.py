@@ -8,11 +8,8 @@ import json
 from datetime import datetime
 
 
-db = Database()
-db.connect()
-
 def run(client, inputs, outputs, task_date: datetime):
-    db.create_logtype_table(outputs["programs_meta"])
+    client.create_logtype_table(outputs["programs_meta"])
 
     meta = json.load(open("static/programs_meta.json"))
 
@@ -20,7 +17,7 @@ def run(client, inputs, outputs, task_date: datetime):
     table.init_from_list_of_dicts(meta)
 
     table.save_data_to_log(
-        db.get_client(),
+        client.get_client(),
         outputs["programs_meta"]
     )
 

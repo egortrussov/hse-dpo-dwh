@@ -21,7 +21,7 @@ def run(client, inputs, outputs, task_date: datetime):
     )
 
     save_data_to_log(
-        client,
+        client.get_client(),
         log_type=outputs["visits"],
         data=fetcher.get_rows(),
         date=task_date_normalized,

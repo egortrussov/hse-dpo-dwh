@@ -1,4 +1,4 @@
-from .log_types import LogTypeBase
+from infra.logtypes.logtype_base import LogTypeBase
 from infra.table_container import (
     TableContainer,
 )
@@ -46,4 +46,3 @@ def send_select_query(
         result.column_names,
         result.result_rows,
     )
-

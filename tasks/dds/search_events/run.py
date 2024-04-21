@@ -3,15 +3,12 @@ from infra.database import Database
 from datetime import datetime
 
 
-db = Database()
-db.connect()
-
 def run(client, inputs, outputs, task_date: datetime):
     task_date_normalized = task_date.isoformat()[:10]
 
-    db.create_logtype_table(outputs["search_events"], task_date_normalized)
+    client.create_logtype_table(outputs["search_events"], task_date_normalized)
 
-    db.query(f"""
+    client.query(f"""
         INSERT INTO
             { outputs["search_events"].get_table_name_by_date(task_date_normalized) }
         SELECT

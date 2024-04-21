@@ -22,15 +22,12 @@ from copy import deepcopy
 from infra.database import Database
 
 
-db = Database()
-db.connect()
-
 def run(client, inputs, outputs, task_date: datetime):
     task_date_normalized = task_date.isoformat()[:10]
     input_table = inputs["source_visits"].get_table_name_by_date(task_date_normalized)
 
     table = send_select_query(
-        client,
+        client.get_client(),
         inputs["source_visits"],
         task_date_normalized,
         fields=None,
@@ -64,18 +61,18 @@ def run(client, inputs, outputs, task_date: datetime):
     table.map_rows(parse_row_goals, is_multiple_output=True)
 
     table.save_data_to_log(
-        client,
+        client.get_client(),
         outputs["parsed_visits"],
         task_date_normalized,
     )
     
-    db.create_logtype_table(
+    client.create_logtype_table(
         outputs["visits_cumulative"],
         task_date_normalized,
         drop=False
     )
 
-    db.query(f"""
+    client.query(f"""
         INSERT INTO 
             conversion.visits
         SELECT

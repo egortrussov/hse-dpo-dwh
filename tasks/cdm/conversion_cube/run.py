@@ -5,22 +5,16 @@ from infra import (
 from infra.table_container import (
     TableContainer,
 )
-from infra.query_sender import (
-    send_query,
-)
 from infra.database import Database
 from datetime import datetime, timedelta
 
 
-db = Database()
-db.connect()
-
 def run(client, inputs, outputs, task_date: datetime, mode=None):
     task_date_normalized = task_date.isoformat()[:10]
 
-    db.create_logtype_table(outputs["conversion_cube"], task_date_normalized)
+    client.create_logtype_table(outputs["conversion_cube"], task_date_normalized)
 
-    db.query(f"""
+    client.query(f"""
         INSERT INTO
             { outputs["conversion_cube"].get_table_name_by_date(task_date_normalized) }
         SELECT *
@@ -174,13 +168,13 @@ def run(client, inputs, outputs, task_date: datetime, mode=None):
         )
     """)
 
-    db.create_logtype_table(
+    client.create_logtype_table(
         outputs["conversion_cube_cumulative"],
         task_date_normalized,
         drop=False
     )
 
-    db.query(f"""
+    client.query(f"""
         INSERT INTO 
             conversion.conversion
         SELECT

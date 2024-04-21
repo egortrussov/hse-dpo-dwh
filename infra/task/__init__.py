@@ -16,6 +16,7 @@ class Task:
         
         self.__config_gc()
 
+
     def configure_deps(self, inputs, outputs):
         self._dependencies = {
             "inputs": inputs,
@@ -40,6 +41,6 @@ class Task:
         )
 
         self.gc.collect()
-    
+
     def __config_gc(self):
         self.gc = GarbageCollector(db, GC_LOGTYPES_WATCH_LIST)

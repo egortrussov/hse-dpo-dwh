@@ -1,5 +1,5 @@
 import clickhouse_connect
-from infra.log_types import LogTypeBase
+from infra.logtypes.logtype_base import LogTypeBase
 
 
 class Database:

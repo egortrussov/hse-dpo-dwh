@@ -5,15 +5,10 @@ from infra import (
 from infra.table_container import (
     TableContainer,
 )
-from infra.query_sender import (
-    send_query,
-)
 from infra.database import Database
 from datetime import datetime, timedelta
 from .utils import (
     FIELDS,
-    get_first_visits_query,
-    get_first_visits_query1,
 )
 
 db = Database()
@@ -30,7 +25,7 @@ def run(client, inputs, outputs, task_date: datetime, mode=None):
     if mode == "recalc":
         recalc_previous_first_visits(
             task_date,
-            client,
+            client.get_client(),
             inputs,
             fetcher
         )
@@ -113,7 +108,7 @@ def recalc_previous_first_visits(
     )
 
     table.save_data_to_log(
-        client,
+        client.get_client(),
         log_type=inputs["first_visits_cumulative"],
         date=yesterday_date_str,
     )
