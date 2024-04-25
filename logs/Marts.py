@@ -7,8 +7,8 @@ from infra.database import (
 )
 
 
-SearchPopularityLog = PermanentLogType(
-    database="conversion",
+SearchPopularityLog = StaticLogType(
+    database="cdm",
     name="search_popularity",
     fields_list=[
         Field("msk_date", "String", str),
@@ -19,7 +19,7 @@ SearchPopularityLog = PermanentLogType(
 )
 
 HitsEnrichedCumulativeLog = StaticLogType(
-    database="conversion",
+    database="cdm",
     name="hits_enriched",
     fields_list=[
         Field('watch_id', "Nullable(String)", str),
@@ -53,7 +53,7 @@ HitsEnrichedCumulativeLog = StaticLogType(
 )
 
 VisitsParsedCumulativeLog = StaticLogType(
-    database="conversion",
+    database="cdm",
     name="visits",
     fields_list=[
         Field("visit_id", "Nullable(String)", str),
@@ -85,7 +85,7 @@ VisitsParsedCumulativeLog = StaticLogType(
 
 
 ConversionCumulativeLog = StaticLogType(
-    database="conversion",
+    database="cdm",
     name="conversion",
     fields_list=[
         Field("action", "String", str),

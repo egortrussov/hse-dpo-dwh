@@ -6,7 +6,7 @@ from infra.database import (
 )
 
 ProgramsMetadataLog = StaticLogType(
-    database="meta",
+    database="dds_metadata",
     name="programs",
     fields_list=[
         Field("id", "Nullable(String)", str),
@@ -22,6 +22,5 @@ ProgramsMetadataLog = StaticLogType(
         Field("application_form_url", "Nullable(String)", str),
         Field("external_ask_form_url", "Nullable(String)", str),
         Field("ask_form_url", "Nullable(String)", str),
-        # Field("related_programs", "Array(String)", list),
     ]
 )

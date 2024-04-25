@@ -8,9 +8,6 @@ from infra.table_container import (
 from infra.query_sender import (
     send_select_query,
 )
-from infra.table_processing import (
-    represent_table_as_list_of_dicts,
-)
 from datetime import datetime
 from .utils import (
     get_goals_names,

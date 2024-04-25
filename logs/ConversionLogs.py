@@ -7,7 +7,7 @@ from infra.database import (
 )
 
 FirstVisitsODS1d = LogTypeWithTTL(
-    database="conversion",
+    database="ods_first_visits",
     name="first_visits",
     ttl=3,
     fields_list=[
@@ -19,7 +19,7 @@ FirstVisitsODS1d = LogTypeWithTTL(
 )
 
 FirstVisitsCumulative = LogTypeWithTTL(
-    database="conversion",
+    database="ods_first_visits",
     name="first_visits_cumulative",
     ttl=3,
     fields_list=[
@@ -31,7 +31,7 @@ FirstVisitsCumulative = LogTypeWithTTL(
 )
 
 SearchEventsDDS1d = LogTypeWithTTL(
-    database="conversion",
+    database="dds_search_events",
     name="search",
     ttl=3,
     fields_list=[
@@ -45,7 +45,7 @@ SearchEventsDDS1d = LogTypeWithTTL(
 )
 
 ProgramPageViewsDDS1d = LogTypeWithTTL(
-    database="conversion",
+    database="dds_program_views",
     name="program_views",
     ttl=3,
     fields_list=[
@@ -58,7 +58,7 @@ ProgramPageViewsDDS1d = LogTypeWithTTL(
 )
 
 AchievedGoalsDDS1d = LogTypeWithTTL(
-    database="conversion",
+    database="dds_achieved_goals",
     name="goals",
     ttl=3,
     fields_list=[
@@ -74,14 +74,13 @@ AchievedGoalsDDS1d = LogTypeWithTTL(
 )
 
 ConversionCubeCDM1d = PermanentLogType(
-    database="conversion",
+    database="cdm_conversion_cube",
     name="conversion_cube",
     fields_list=[
         Field("action", "String", str),
         Field("msk_date", "String", str),
         Field("client_id", "String", str),
 
-        # Field("main_program_id", "Nullable(String)", str),
         Field("tags", "Array(Nullable(String))", list),
         Field("types", "Array(String)", list),
         Field("queries", "Array(String)", list),

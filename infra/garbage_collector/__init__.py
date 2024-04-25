@@ -39,11 +39,11 @@ class GarbageCollector:
                 )
     
     def get_logtype_tables(self, logtype: LogTypeWithTTL):
-        return self.database.query(f"""
+        return str(self.database.query(f"""
             SHOW TABLES
             FROM { logtype.get_database() }
             LIKE '{ logtype.get_name() }%'
-        """).split("\n")
+        """)).split("\n")
     
     
     def __assert_logtypes(self):

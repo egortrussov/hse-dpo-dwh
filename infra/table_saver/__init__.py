@@ -1,4 +1,4 @@
-from .logtypes.logtype_base import (
+from infra.logtypes.logtype_base import (
     LogTypeBase,
 )
 

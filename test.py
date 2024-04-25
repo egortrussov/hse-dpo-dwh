@@ -49,23 +49,23 @@ db.connect()
 
 DATE = dt.datetime(2024, 4, 4)
 
-# FetchVisitsSRCDailyTask(db.get_client()).run(DATE)
-# ParseVisitsODSDailyTask(db.get_client()).run(DATE)
+# FetchVisitsSRCDailyTask(db).run(DATE)
+ParseVisitsODSDailyTask(db).run(DATE)
 
-# FetchHitsTaskSRCDailyTask(db.get_client()).run(DATE)
-ParseHitsODSDailyTask(db.get_client()).run(DATE)
+FetchHitsTaskSRCDailyTask(db).run(DATE)
+ParseHitsODSDailyTask(db).run(DATE)
 
-# AchievedGoalsDDSDailyTask(db.get_client()).run(DATE)
+AchievedGoalsDDSDailyTask(db).run(DATE)
 
 
-# ProgramsMetaDDSTask(db.get_client()).run(DATE)
+ProgramsMetaDDSTask(db).run(DATE)
 
-# HitsEnrichedDDSDailyTask(db.get_client()).run(DATE)
+HitsEnrichedDDSDailyTask(db).run(DATE)
 
-# FirstVisitsODSDailyTask(db.get_client()).run(DATE)
+FirstVisitsODSDailyTask(db).run(DATE)
 
-# SearchEventsDDSDailyTask(db.get_client()).run(DATE)
-# ProgramViewEventDDSDailyTask(db.get_client()).run(DATE)
+# SearchEventsDDSDailyTask(db).run(DATE)
+# ProgramViewEventDDSDailyTask(db).run(DATE)
 
-# ConversionCubeCDMDailyTask(db.get_client()).run(DATE)
-# HitsEnrichedCumulativeDailyTask(db.get_client()).run(DATE)
+# ConversionCubeCDMDailyTask(db).run(DATE)
+# HitsEnrichedCumulativeDailyTask(db).run(DATE)

@@ -1,5 +1,4 @@
 import clickhouse_connect
-from infra.logtypes.logtype_base import LogTypeBase
 
 
 class Database:
@@ -9,7 +8,7 @@ class Database:
 
 
     def connect(self):
-        self.client = clickhouse_connect.get_client(host='172.18.0.9')
+        self.client = clickhouse_connect.get_client(host='172.18.0.2')
         # self.client = clickhouse_connect.get_client(host='localhost')
     
     
@@ -20,7 +19,7 @@ class Database:
 
     def create_logtype_table(
             self,
-            logtype: LogTypeBase,
+            logtype,
             date_str = None,
             drop  = True
     ):
@@ -49,7 +48,7 @@ class Database:
         return self.client.command(query)
 
     
-    def drop_table(self, logtype: LogTypeBase, date_str: str = None):
+    def drop_table(self, logtype, date_str: str = None):
         drop_table_query = f"""
             DROP TABLE IF EXISTS
             { logtype.get_table_name_by_date(date_str) }

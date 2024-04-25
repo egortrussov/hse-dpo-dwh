@@ -1,5 +1,5 @@
 from infra.logtypes.logtype_base import LogTypeBase
-from .table_saver import table_saver
+from .table_saver import save_data_to_log
 
 
 class TableContainer:
@@ -62,7 +62,7 @@ class TableContainer:
             log_type: LogTypeBase,
             date = None,
     ):
-        table_saver.save_data_to_log(
+        save_data_to_log(
             client,
             log_type,
             self.__prepare_rows_for_schema(log_type.get_fields(), log_type.get_types()),
